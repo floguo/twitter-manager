@@ -1,10 +1,5 @@
-import FollowingManager from '../components/FollowingManager';
+import FollowingList from '../components/FollowingList';
 
 export default function FollowingPage() {
-  return (
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-bold my-6">Following Manager</h1>
-      <FollowingManager />
-    </div>
-  );
+  return <FollowingList />;
 } 

@@ -1,18 +1,20 @@
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from './api/auth/[...nextauth]/route';
-import SignInButton from './components/SignInButton';
+'use client';
+
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 import FollowingList from './components/FollowingList';
 
-export default async function Page() {
-  const session = await getServerSession(authOptions);
+export default function FollowingPage() {
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/api/auth/signin');
+    },
+  });
 
-  return (
-    <main className="p-4">
-      {!session ? (
-        <SignInButton />
-      ) : (
-        <FollowingList />
-      )}
-    </main>
-  );
-} 
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  return <FollowingList />;
+}
