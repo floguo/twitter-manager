@@ -1,10 +1,18 @@
-import AuthTest from './components/AuthTest'
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './api/auth/[...nextauth]/route';
+import SignInButton from './components/SignInButton';
+import FollowingList from './components/FollowingList';
 
-export default function Home() {
+export default async function Page() {
+  const session = await getServerSession(authOptions);
+
   return (
-    <main>
-      <h1>Auth Test</h1>
-      <AuthTest />
+    <main className="p-4">
+      {!session ? (
+        <SignInButton />
+      ) : (
+        <FollowingList />
+      )}
     </main>
-  )
+  );
 } 
